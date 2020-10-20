@@ -1,5 +1,5 @@
 import glob
-#import speech_recognition as sr
+import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
 import time
@@ -11,20 +11,38 @@ def async_playback(filename):
     sd.play(data,fs)
     return data, fs
 
+def listening():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Say something:")
+        audio = r.listen(source)
+        try:
+            text = r.recognize_google(audio,language='es-ES')
+            print(text)
+            return text
+        except:
+            print("Sorry could not recognize what you said")
+            
+            
+
 def select_audio():
     while True:
         op = input("Opcion: ")
         if op == "show_list":
             for elem,tema in enumerate(lista_temas):
                 print(elem,tema)
-            eleccion = OKI(input("Introduzca número correspondiente a su eleccion: "))
-            while int(eleccion) > (len(lista_temas)-1):
-                eleccion = OKI(input("Introduzca indice válido correspondiente a su opción: "))
-            assert eleccion in range(len(lista_temas))
-            audio_selec = lista_temas[eleccion]
-            print("AUDIO SELECCIONADO: {}".format(audio_selec))
-            async_playback(audio_selec)
-        
+            eleccion = listening()
+            
+            print(type(eleccion))
+            try:
+                tema = int(eleccion)
+                assert tema in range(len(lista_temas))
+                audio_selec = lista_temas[tema]
+                print("AUDIO SELECCIONADO: {}".format(audio_selec))
+                async_playback(audio_selec)
+            except Exception as e:
+                print(str(e))
+                
         elif op == "STOP":
             sd.stop()
         elif op == "END":
