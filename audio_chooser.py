@@ -1,5 +1,5 @@
 import glob
-import speech_recognition as sr
+#import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
 import time
@@ -13,17 +13,19 @@ def async_playback(filename):
 
 def select_audio():
     while True:
-        for elem,tema in enumerate(lista_temas):
-            print(elem,tema)
-        eleccion = OKI(input("Introduzca número correspondiente a su eleccion: "))
-        while int(eleccion) > (len(lista_temas)-1):
-            eleccion = OKI(input("Introduzca indice válido correspondiente a su opción: "))
-        assert eleccion in range(len(lista_temas))
-        audio_selec = lista_temas[eleccion]
-        print("AUDIO SELECCIONADO: {}".format(audio_selec))
-        async_playback(audio_selec)
         op = input("Opcion: ")
-        if op == "STOP":
+        if op == "show_list":
+            for elem,tema in enumerate(lista_temas):
+                print(elem,tema)
+            eleccion = OKI(input("Introduzca número correspondiente a su eleccion: "))
+            while int(eleccion) > (len(lista_temas)-1):
+                eleccion = OKI(input("Introduzca indice válido correspondiente a su opción: "))
+            assert eleccion in range(len(lista_temas))
+            audio_selec = lista_temas[eleccion]
+            print("AUDIO SELECCIONADO: {}".format(audio_selec))
+            async_playback(audio_selec)
+        
+        elif op == "STOP":
             sd.stop()
         elif op == "END":
             sd.stop()
