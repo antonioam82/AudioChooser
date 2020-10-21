@@ -29,8 +29,8 @@ def listening():
 
 def select_audio():
     while True:
-        op = input("Opcion: ")
-        if op == "show_list":
+        op = listening()
+        if op == "lista":
             for elem,tema in enumerate(lista_temas):
                 print(elem,tema)
             numero = listening()
@@ -49,9 +49,10 @@ def select_audio():
             except Exception as e:
                 print(str(e))
                 
-        elif op == "STOP":
+        elif op == "para":
             sd.stop()
-        elif op == "END":
+            print('STOPPED')
+        elif op == "fin":
             sd.stop()
             break
 
