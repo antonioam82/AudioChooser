@@ -6,6 +6,8 @@ import time
 import os
 from VALID import OKI
 
+nums = {'uno':1,'dos':2,'tres':3,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
+
 def async_playback(filename):
     data, fs = sf.read(filename)
     sd.play(data,fs)
@@ -31,7 +33,11 @@ def select_audio():
         if op == "show_list":
             for elem,tema in enumerate(lista_temas):
                 print(elem,tema)
-            eleccion = listening()
+            numero = listening()
+            if numero in nums:
+                eleccion = nums[numero]
+            else:
+                eleccion = numero
             
             print(type(eleccion))
             try:
