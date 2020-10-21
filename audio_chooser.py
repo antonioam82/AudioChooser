@@ -6,7 +6,7 @@ import time
 import os
 from VALID import OKI
 
-nums = {'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
+nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
 #C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
@@ -52,7 +52,7 @@ def select_audio():
             except Exception as e:
                 print(str(e))
                 
-        elif op == "para":
+        elif op == "parar":
             sd.stop()
             print('STOPPED')
         elif op == "fin":
