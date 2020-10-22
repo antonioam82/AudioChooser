@@ -6,6 +6,8 @@ import time
 import os
 from VALID import OKI
 
+#C:\Users\Antonio\Documents\videos\audios
+
 def async_playback(filename):
     data, fs = sf.read(filename)
     sd.play(data,fs)
@@ -16,17 +18,18 @@ def select_theme():
     for elem,tema in enumerate(lista_temas):
         print(elem,tema)
     print("********************************************************\n")
-            
-    eleccion = OKI(input("Introduce número correspondiente al audio deseado: "))
-            
-    print(type(eleccion))
-    try:
-        assert eleccion in range(len(lista_temas))
-        audio_selec = lista_temas[eleccion]
-        print("AUDIO SELECCIONADO: {}".format(audio_selec))
-        async_playback(audio_selec)
-    except Exception as e:
-        print(str(e))    
+
+    while True:
+        eleccion = OKI(input("Introduce número correspondiente al audio deseado: "))
+
+        try:
+            assert eleccion in range(len(lista_temas))
+            audio_selec = lista_temas[eleccion]
+            print("AUDIO SELECCIONADO: {}".format(audio_selec))
+            async_playback(audio_selec)
+            break
+        except Exception as e:
+            print(str(e))    
     
 def select_audio():
     while True:
@@ -42,9 +45,14 @@ def select_audio():
             sd.stop()
             break
 
-
-direc = input("Introduce directorio: ")
-os.chdir(direc)
+while True:
+    direc = input("Introduce un directorio válido: ")
+    try:
+        os.chdir(direc)
+        break
+    except:
+        pass
+    
 print(os.getcwd())
 lista_temas = []
 for i in glob.glob("*.wav"):
