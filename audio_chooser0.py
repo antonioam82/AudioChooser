@@ -1,11 +1,10 @@
 import glob
+import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
 import time
 import os
 from VALID import OKI
-
-#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     data, fs = sf.read(filename)
@@ -13,9 +12,10 @@ def async_playback(filename):
     return data, fs
 
 def select_theme():
-    print("********************LISTA DE AUDIOS********************")
+    print("\n********************LISTA DE AUDIOS********************")
     for elem,tema in enumerate(lista_temas):
         print(elem,tema)
+    print("********************************************************\n")
             
     eleccion = OKI(input("Introduce número correspondiente al audio deseado: "))
             
