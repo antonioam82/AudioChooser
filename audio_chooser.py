@@ -51,10 +51,10 @@ def select_audio():
             except Exception as e:
                 print(str(e))
                 
-        elif op == "parar":
+        elif "parar" in op:
             sd.stop()
             print('STOPPED')
-        elif op == "fin":
+        elif "fin" in op:
             sd.stop()
             break
 
