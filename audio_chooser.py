@@ -4,7 +4,8 @@ import sounddevice as sd
 import soundfile as sf
 import time
 import os
-from VALID import OKI
+import threading
+#from VALID import OKI
 
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
 #C:\Users\Antonio\Documents\videos\audios
@@ -18,14 +19,14 @@ def listening():
     r = sr.Recognizer()
     with sr.Microphone() as source:
         print("Say something:")
+        r.adjust_for_ambient_noise(source)
         audio = r.listen(source)
         try:
             text = r.recognize_google(audio,language='es-ES')
             print(text)
             return text
         except:
-            pass
-            #print("Sin entrada")
+            print("Sin entrada")
             
             
 
@@ -68,4 +69,7 @@ lista_temas = []
 for i in glob.glob("*.wav"):
     lista_temas.append(i)
 
-select_audio()
+t = threading.Thread(target=select_audio)
+t.start()
+
+#select_audio()
