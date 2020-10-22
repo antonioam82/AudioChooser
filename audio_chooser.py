@@ -7,6 +7,7 @@ import os
 from VALID import OKI
 
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     data, fs = sf.read(filename)
@@ -23,7 +24,8 @@ def listening():
             print(text)
             return text
         except:
-            print("Sorry could not recognize what you said")
+            pass
+            #print("Sin entrada")
             
             
 
@@ -51,10 +53,10 @@ def select_audio():
             except Exception as e:
                 print(str(e))
                 
-        elif "parar" in op:
+        elif op == 'parar':
             sd.stop()
             print('STOPPED')
-        elif "fin" in op:
+        elif op == 'fin':
             sd.stop()
             break
 
