@@ -5,7 +5,9 @@ import soundfile as sf
 import time
 import os
 import threading
-#from VALID import OKI
+import pyttsx3
+from VALID import OKI
+
 
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
 #C:\Users\Antonio\Documents\videos\audios
@@ -37,6 +39,8 @@ def select_audio():
             print("********************LISTA DE AUDIOS********************")
             for elem,tema in enumerate(lista_temas):
                 print(elem,tema)
+            #current = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
+            #start_speaking()
             print("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO.")
             numero = listening()
             if numero in nums:
@@ -61,7 +65,21 @@ def select_audio():
             sd.stop()
             break
 
+def speaker():
+    global current
+    engine.say(current)
+    engine.runAndWait()
+    engine.stop()
 
+def start_speaking():
+    
+    t = threading.Thread(target=speaker)
+    t.start()
+
+
+engine = pyttsx3.init()
+current = "antes de empezar introduzca la ruta a su colección"
+start_speaking()
 direc = input("Introduce directorio: ")
 os.chdir(direc)
 print(os.getcwd())
@@ -69,7 +87,4 @@ lista_temas = []
 for i in glob.glob("*.wav"):
     lista_temas.append(i)
 
-t = threading.Thread(target=select_audio)
-t.start()
-
-#select_audio()
+select_audio()
