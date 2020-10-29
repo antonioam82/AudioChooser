@@ -39,8 +39,8 @@ def select_audio():
             print("********************LISTA DE AUDIOS********************")
             for elem,tema in enumerate(lista_temas):
                 print(elem,tema)
-            #current = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
-            #start_speaking()
+            current = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
+            start_speaking()
             print("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO.")
             numero = listening()
             if numero in nums:
@@ -80,7 +80,13 @@ def start_speaking():
 engine = pyttsx3.init()
 current = "antes de empezar introduzca la ruta a su colección"
 start_speaking()
-direc = input("Introduce directorio: ")
+while True:
+    direc = input("Introduce directorio: ")
+    try:
+        os.chdir(direc)
+        break
+    except:
+        pass
 os.chdir(direc)
 print(os.getcwd())
 lista_temas = []
