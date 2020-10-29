@@ -56,6 +56,7 @@ def select_audio():
                 async_playback(audio_selec)
             except Exception as e:
                 print(str(e))
+                speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
                 
         elif op == 'parar':
             sd.stop()
