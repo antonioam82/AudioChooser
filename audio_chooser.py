@@ -10,6 +10,7 @@ from VALID import OKI
 
 
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     data, fs = sf.read(filename)
@@ -33,9 +34,10 @@ def select_audio():
     while True:
         op = listening()
         if op == "lista":
-            print("********************LISTA DE AUDIOS********************")
+            print("\n********************LISTA DE AUDIOS********************")
             for elem,tema in enumerate(lista_temas):
                 print(elem,tema)
+            print("********************************************************\n")
             current = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
             texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
             speaker(texto,1)
