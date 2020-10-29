@@ -4,7 +4,6 @@ import sounddevice as sd
 import soundfile as sf
 import time
 import os
-import threading
 import pyttsx3
 from VALID import OKI
 
@@ -40,8 +39,8 @@ def select_audio():
             for elem,tema in enumerate(lista_temas):
                 print(elem,tema)
             current = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
-            start_speaking()
-            print("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO.")
+            texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
+            speaker(texto,1)
             numero = listening()
             if numero in nums:
                 eleccion = nums[numero]
@@ -65,21 +64,16 @@ def select_audio():
             sd.stop()
             break
 
-def speaker():
-    global current
-    engine.say(current)
+def speaker(content,v):
+    engine.say(content)
+    if v == 1:
+        print(content)
     engine.runAndWait()
     engine.stop()
 
-def start_speaking():
-    
-    t = threading.Thread(target=speaker)
-    t.start()
-
-
 engine = pyttsx3.init()
-current = "antes de empezar introduzca la ruta a su colección"
-start_speaking()
+print("HOLA")
+speaker("antes de empezar introduzca ruta al directorio",0)
 while True:
     direc = input("Introduce directorio: ")
     try:
@@ -87,6 +81,7 @@ while True:
         break
     except:
         pass
+    
 os.chdir(direc)
 print(os.getcwd())
 lista_temas = []
