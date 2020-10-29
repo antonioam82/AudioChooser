@@ -2,19 +2,21 @@ import glob
 import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
-import time
+#import time
 import os
 import threading
 import pyttsx3
 from VALID import OKI
 
-
+list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
 #C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
+    global list_inn
     data, fs = sf.read(filename)
     sd.play(data,fs)
+    list_inn = False
     return data, fs
 
 def listening():
@@ -23,14 +25,23 @@ def listening():
         print("Say something:")
         r.adjust_for_ambient_noise(source)
         audio = r.listen(source)
-        text = r.recognize_google(audio,language='es-ES')
-        print(text)
-        return text
+        try:
+            text = r.recognize_google(audio,language='es-ES')
+            print("TEXTO: ",text)
+            if list_inn == True:
+                if text in nums or text.isdigit():
+                    return text
+            else:
+                return text
+        except:
+            print("Sin entrada")
             
 def select_audio():
     while True:
+        global list_inn
         op = listening()
         if op == "lista":
+            list_inn = True
             print("\n********************LISTA DE AUDIOS********************")
             for elem,tema in enumerate(lista_temas):
                 print(elem,tema)
@@ -38,6 +49,7 @@ def select_audio():
             current = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
             texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
             speaker(texto,1)
+            
             numero = listening()
             if numero in nums:
                 eleccion = nums[numero]
@@ -53,9 +65,11 @@ def select_audio():
                 async_playback(audio_selec)
             except Exception as e:
                 print(str(e))
+                list_inn = False
                 speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
                 
         elif op == 'parar':
+            list_inn = False
             sd.stop()
             print('STOPPED')
             speaker("audio interrumpido",0)
