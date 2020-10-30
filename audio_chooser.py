@@ -35,6 +35,7 @@ def listening():
                 return text
         except:
             print("Sin entrada")
+            pass
             
 def select_audio():
     while True:
@@ -42,31 +43,33 @@ def select_audio():
         op = listening()
         if op == "lista":
             list_inn = True
-            print("\n********************LISTA DE AUDIOS********************")
-            for elem,tema in enumerate(lista_temas):
-                print(elem,tema)
-            print("********************************************************\n")
-            current = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
-            texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
-            speaker(texto,1)
+            while True:
+                print("\n********************LISTA DE AUDIOS********************")
+                for elem,tema in enumerate(lista_temas):
+                    print(elem,tema)
+                print("********************************************************\n")
+                current = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
+                texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
+                speaker(texto,1)
             
-            numero = listening()
-            if numero in nums:
-                eleccion = nums[numero]
-            else:
-                eleccion = numero
+                numero = listening()
+                if numero in nums:
+                    eleccion = nums[numero]
+                else:
+                    eleccion = numero
             
-            print(type(eleccion))
-            try:
-                tema = int(eleccion)
-                assert tema in range(len(lista_temas))
-                audio_selec = lista_temas[tema]
-                print("AUDIO SELECCIONADO: {}".format(audio_selec))
-                async_playback(audio_selec)
-            except Exception as e:
-                print(str(e))
-                list_inn = False
-                speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
+                print(type(eleccion))
+                try:
+                    tema = int(eleccion)
+                    assert tema in range(len(lista_temas))
+                    audio_selec = lista_temas[tema]
+                    print("AUDIO SELECCIONADO: {}".format(audio_selec))
+                    async_playback(audio_selec)
+                    break
+                except Exception as e:
+                    print(str(e))
+                    list_inn = False
+                    speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
                 
         elif op == 'para':
             list_inn = False
@@ -77,6 +80,16 @@ def select_audio():
             sd.stop()
             speaker("programa finalizado",0)
             break
+        
+def correct_dir():
+    while True:
+        direc = input("Introduce directorio: ")
+        try:
+            os.chdir(direc)
+            break
+        except:
+            pass
+    
 
 def speaker(content,v):
     engine.say(content)
@@ -88,15 +101,8 @@ def speaker(content,v):
 engine = pyttsx3.init()
 print("HOLA")
 speaker("antes de empezar introduzca ruta al directorio",0)
-while True:
-    direc = input("Introduce directorio: ")
-    try:
-        os.chdir(direc)
-        break
-    except:
-        pass
-    
-os.chdir(direc)
+correct_dir()
+
 print(os.getcwd())
 lista_temas = []
 for i in glob.glob("*.wav"):
