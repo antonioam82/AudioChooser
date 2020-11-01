@@ -24,7 +24,7 @@ def listening():
     with sr.Microphone() as source:
         print("Say something:")
         r.adjust_for_ambient_noise(source)
-        r.energy_threshold=10000
+        r.energy_threshold=10050
 
         audio = r.listen(source)
         try:
