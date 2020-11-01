@@ -2,12 +2,15 @@ import glob
 import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
+#import time
 import os
 import threading
 import pyttsx3
+from VALID import OKI
 
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -102,7 +105,11 @@ engine = pyttsx3.init()
 lista_temas = []
 
 while len(lista_temas) == 0:
-    print("HOLA")
+    print("\n********************COMANDOS DE VOZ********************")
+    print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
+    print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
+    print("'fin'------------------------------FINALIZA EL PROGRAMA")
+    print("*******************************************************\n")
     speaker("antes de empezar introduzca ruta al directorio",0)
     correct_dir()
 
