@@ -2,6 +2,7 @@ import glob
 import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
+#import time
 import os
 import threading
 import pyttsx3
@@ -10,6 +11,7 @@ from VALID import OKI
 #playing = False
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -78,7 +80,7 @@ def select_audio():
             speaker("audio interrumpido",0)
         elif op == 'fin':
             sd.stop()
-            speaker("programa finalizado",0)
+            speaker("programa finalizado, hasta pronto",0)
             break
         
 def correct_dir():
@@ -124,4 +126,5 @@ while len(lista_temas) == 0:
         speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
 select_audio()
+
 
