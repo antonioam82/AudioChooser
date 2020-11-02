@@ -8,6 +8,7 @@ import threading
 import pyttsx3
 from VALID import OKI
 
+#playing = False
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
 #C:\Users\Antonio\Documents\videos\audios
@@ -50,7 +51,7 @@ def select_audio():
                 for elem,tema in enumerate(lista_temas):
                     print(elem,tema)
                 print("********************************************************\n")
-                texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO"
+                texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO."
                 speaker(texto,1)
             
                 numero = listening()
@@ -65,6 +66,7 @@ def select_audio():
                     assert tema in range(len(lista_temas))
                     audio_selec = lista_temas[tema]
                     print("AUDIO SELECCIONADO: {}".format(audio_selec))
+                    #playing = True
                     async_playback(audio_selec)
                     break
                 except Exception as e:
@@ -93,6 +95,7 @@ def correct_dir():
     
 
 def speaker(content,v):
+    #if playing == False:
     engine.say(content)
     if v == 1:
         print(content)
@@ -102,6 +105,7 @@ def speaker(content,v):
     
 
 engine = pyttsx3.init()
+engine.setProperty('rate',160)
 lista_temas = []
 
 while len(lista_temas) == 0:
