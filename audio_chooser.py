@@ -2,7 +2,6 @@ import glob
 import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
-#import time
 import os
 import threading
 import pyttsx3
@@ -11,7 +10,6 @@ from VALID import OKI
 #playing = False
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
-#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
