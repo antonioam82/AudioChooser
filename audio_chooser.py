@@ -2,7 +2,6 @@ import glob
 import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
-#import time
 import os
 import threading
 import pyttsx3
@@ -126,5 +125,6 @@ while len(lista_temas) == 0:
         speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
 select_audio()
+
 
 
