@@ -25,7 +25,7 @@ def listening():
     with sr.Microphone() as source:
         print("Say something:")
         r.adjust_for_ambient_noise(source)
-        r.energy_threshold=10050
+        r.energy_threshold=400#10050
 
         audio = r.listen(source)
         try:
@@ -66,7 +66,6 @@ def select_audio():
                     assert tema in range(len(lista_temas))
                     audio_selec = lista_temas[tema]
                     print("AUDIO SELECCIONADO: {}".format(audio_selec))
-                    #playing = True
                     async_playback(audio_selec)
                     break
                 except Exception as e:
@@ -95,7 +94,6 @@ def correct_dir():
     
 
 def speaker(content,v):
-    #if playing == False:
     engine.say(content)
     if v == 1:
         print(content)
@@ -103,6 +101,7 @@ def speaker(content,v):
     engine.stop()
 
     
+sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
 engine = pyttsx3.init()
 engine.setProperty('rate',160)
@@ -124,6 +123,7 @@ while len(lista_temas) == 0:
 
     if len(lista_temas) == 0:
         print("CARPETA VACÍA\n")
+        speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
 select_audio()
 
