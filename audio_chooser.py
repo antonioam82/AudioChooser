@@ -2,6 +2,7 @@ import glob
 import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
+#import time
 import os
 import threading
 import pyttsx3
@@ -9,7 +10,8 @@ from VALID import OKI
 
 #playing = False
 list_inn = False
-nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9}
+nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
+        'diez':10,'once':11}
 #C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
@@ -18,6 +20,19 @@ def async_playback(filename):
     sd.play(data,fs)
     list_inn = False
     return data, fs
+
+def cambia_microfono():
+    sd.stop()###################################################################################
+    print("\n****************************MICROFONOS DISPONIBLES****************************")
+    for i in enumerate(sr.Microphone.list_microphone_names()):
+        print(i)
+    print("*******************************************************************************\n")
+    print("DIGA EN ALTO EL NÚMERO.")
+    try:
+        opcion = int(listening())
+        sd.default.device=opcion
+    except Exception as e:
+        print(str(e))
 
 def listening():
     r = sr.Recognizer()
@@ -81,6 +96,8 @@ def select_audio():
             sd.stop()
             speaker("programa finalizado, hasta pronto",0)
             break
+        elif op == 'cambia micrófono':
+            cambia_microfono()
         
 def correct_dir():
     while True:
@@ -100,7 +117,7 @@ def speaker(content,v):
     engine.stop()
 
     
-sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
+#sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
 engine = pyttsx3.init()
 engine.setProperty('rate',160)
@@ -111,11 +128,12 @@ while len(lista_temas) == 0:
     print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
     print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
     print("'fin'------------------------------FINALIZA EL PROGRAMA")
+    print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
     print("*******************************************************\n")
     speaker("antes de empezar introduzca ruta al directorio",0)
     correct_dir()
 
-    print(os.getcwd())
+    print("\nCARPETA: ",os.getcwd())
 
     for i in glob.glob("*.wav"):
         lista_temas.append(i)
@@ -125,6 +143,7 @@ while len(lista_temas) == 0:
         speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
 select_audio()
+
 
 
 
