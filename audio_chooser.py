@@ -3,7 +3,6 @@ import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
 import os
-import threading
 import pyttsx3
 
 #playing = False
