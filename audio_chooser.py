@@ -5,8 +5,8 @@ import soundfile as sf
 import os
 import threading
 import pyttsx3
-from VALID import OKI
 
+#playing = False
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11}
@@ -19,12 +19,13 @@ def async_playback(filename):
     return data, fs
 
 def cambia_microfono():
-    sd.stop()###################################################################################
+    sd.stop()
     print("\n****************************MICROFONOS DISPONIBLES****************************")
     for i in enumerate(sr.Microphone.list_microphone_names()):
         print(i)
-    print("*******************************************************************************\n")
-    print("DIGA EN ALTO EL NÚMERO.")
+    print("******************************************************************************\n")
+    speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
+    #print("DIGA EN ALTO EL NÚMERO.")
     try:
         opcion = int(listening())
         sd.default.device=opcion
