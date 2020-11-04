@@ -9,6 +9,7 @@ import pyttsx3
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -24,6 +25,7 @@ def cambia_microfono():
         print(i)
     print("******************************************************************************\n")
     speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
+    #print("DIGA EN ALTO EL NÚMERO.")
     try:
         opcion = int(listening())
         sd.default.device=opcion
@@ -99,7 +101,7 @@ def select_audio():
         
 def correct_dir():
     while True:
-        direc = input("Introduce directorio: ")
+        direc = input("Introduce directorio válido: ")
         try:
             os.chdir(direc)
             break
