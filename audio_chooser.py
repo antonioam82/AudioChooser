@@ -8,6 +8,7 @@ import pyttsx3
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -26,17 +27,20 @@ def cambia_microfono():
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
         #print("DIGA EN ALTO EL NÚMERO.")
         try:
-            reco = listening()
-            if reco in nums:
-                opcion = nums[reco]
-            else:
-                opcion = int(reco)
+            opcion = int(validate_num(listening()))
             sd.default.device=opcion
             print("\nINDICE MICRÓFONO: ",opcion)
             speaker("nuevo microfono establecido correctamente",0)
             break
         except Exception as e:
             print(str(e))
+            speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
+
+def validate_num(value):
+    if value in nums:
+        return nums[value]
+    else:
+        return value
 
 def listening():
     r = sr.Recognizer()
@@ -71,18 +75,12 @@ def select_audio():
                 print("*******************************************************\n")
                 texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO."
                 speaker(texto,1)
-            
-                numero = listening()
-                if numero in nums:
-                    eleccion = nums[numero]
-                else:
-                    eleccion = numero
-            
-                print(type(eleccion))
+                
                 try:
-                    tema = int(eleccion)
-                    assert tema in range(len(lista_temas))
-                    audio_selec = lista_temas[tema]
+                    numero = int(validate_num(listening()))
+                    print(type(numero))
+                    assert numero in range(len(lista_temas))
+                    audio_selec = lista_temas[numero]
                     print("AUDIO SELECCIONADO: {}".format(audio_selec))
                     async_playback(audio_selec)
                     break
@@ -120,7 +118,7 @@ def speaker(content,v):
     engine.runAndWait()
     engine.stop()
 
-        
+    
 #sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
 engine = pyttsx3.init()
