@@ -8,6 +8,7 @@ import pyttsx3
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -17,20 +18,26 @@ def async_playback(filename):
     return data, fs
 
 def cambia_microfono():
-    sd.stop()
-    print("\n****************************MICROFONOS DISPONIBLES****************************")
-    for i in enumerate(sr.Microphone.list_microphone_names()):
-        print(i)
-    print("******************************************************************************\n")
-    speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
-    #print("DIGA EN ALTO EL NÚMERO.")
-    try:
-        opcion = int(listening())
-        sd.default.device=opcion
-        print("\nINDICE MICRÓFONO: ",opcion)
-        speaker("nuevo microfono establecido correctamente",0)
-    except Exception as e:
-        print(str(e))
+    sd.stop()###################################################################################
+    while True:
+        print("\n****************************MICROFONOS DISPONIBLES****************************")
+        for i in enumerate(sr.Microphone.list_microphone_names()):
+            print(i)
+        print("******************************************************************************\n")
+        speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
+        #print("DIGA EN ALTO EL NÚMERO.")
+        try:
+            reco = listening()
+            if reco in nums:
+                opcion = nums[reco]
+            else:
+                opcion = int(reco)
+            sd.default.device=opcion
+            print("\nINDICE MICRÓFONO: ",opcion)
+            speaker("nuevo microfono establecido correctamente",0)
+            break
+        except Exception as e:
+            print(str(e))
 
 def listening():
     r = sr.Recognizer()
@@ -62,7 +69,7 @@ def select_audio():
                 print("\n********************LISTA DE AUDIOS********************")
                 for elem,tema in enumerate(lista_temas):
                     print(elem,tema)
-                print("********************************************************\n")
+                print("*******************************************************\n")
                 texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO."
                 speaker(texto,1)
             
@@ -114,7 +121,7 @@ def speaker(content,v):
     engine.runAndWait()
     engine.stop()
 
-    
+        
 #sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
 engine = pyttsx3.init()
@@ -127,7 +134,7 @@ while len(lista_temas) == 0:
     print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
     print("'fin'------------------------------FINALIZA EL PROGRAMA")
     print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
-    print("*******************************************************\n")
+    print("********************************************************\n")
     speaker("antes de empezar introduzca ruta al directorio",0)
     correct_dir()
 
