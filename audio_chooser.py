@@ -5,15 +5,13 @@ import soundfile as sf
 import os
 import pyttsx3
 
-list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
-    global list_inn
     data, fs = sf.read(filename)
     sd.play(data,fs)
-    list_inn = False
     return data, fs
 
 def cambia_microfono():
@@ -52,21 +50,15 @@ def listening():
         try:
             text = r.recognize_google(audio,language='es-ES')
             print("TEXTO: ",text)
-            if list_inn == True:
-                if text in nums or text.isdigit():
-                    return text
-            else:
-                return text
+            return text
         except:
             print("Sin entrada")
             pass
             
 def select_audio():
     while True:
-        global list_inn
         op = listening()
         if op == "lista":
-            list_inn = True
             while True:
                 print("\n********************LISTA DE AUDIOS********************")
                 for elem,tema in enumerate(lista_temas):
@@ -85,11 +77,9 @@ def select_audio():
                     break
                 except Exception as e:
                     print(str(e))
-                    list_inn = False
                     speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
                 
         elif op == 'para':
-            list_inn = False
             sd.stop()
             print('STOPPED')
             speaker("audio interrumpido",0)
