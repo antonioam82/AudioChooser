@@ -7,6 +7,7 @@ import pyttsx3
 
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     data, fs = sf.read(filename)
@@ -95,6 +96,8 @@ def select_audio():
             break
         elif op == 'cambia micrófono':
             cambia_microfono()
+        elif op == 'comandos':
+            comandos()
         
 def correct_dir():
     while True:
@@ -113,6 +116,15 @@ def speaker(content,v):
     engine.runAndWait()
     engine.stop()
 
+def comandos():
+    print("\n********************COMANDOS DE VOZ********************")
+    print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
+    print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
+    print("'fin'------------------------------FINALIZA EL PROGRAMA")
+    print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
+    print("'comandos'----------------------MUESTRA COMANDOS DE VOZ")
+    print("********************************************************\n")    
+
     
 #sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
@@ -121,12 +133,7 @@ engine.setProperty('rate',160)
 lista_temas = []
 
 while len(lista_temas) == 0:
-    print("\n********************COMANDOS DE VOZ********************")
-    print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
-    print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
-    print("'fin'------------------------------FINALIZA EL PROGRAMA")
-    print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
-    print("********************************************************\n")
+    comandos()
     speaker("antes de empezar introduzca ruta al directorio",0)
     correct_dir()
 
