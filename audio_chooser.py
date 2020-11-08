@@ -14,7 +14,7 @@ def async_playback(filename):
     return data, fs
 
 def cambia_microfono():
-    sd.stop()###################################################################################
+    sd.stop()
     while True:
         counter = -1
         print("\n****************************MICROFONOS DISPONIBLES****************************")
