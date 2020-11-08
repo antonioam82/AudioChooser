@@ -106,7 +106,6 @@ def correct_dir():
         except:
             pass
     
-
 def speaker(content,v):
     engine.say(content)
     if v == 1:
