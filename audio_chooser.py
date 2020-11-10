@@ -87,10 +87,11 @@ def select_audio():
                     break
                 except Exception as e:
                     print(str(e))
-                    speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
                     if 'Error opening OutputStream:' in str(e):
                         speaker("MICRÓFONO NO VÁLIDO, UTILICE OTRO MICRÓFONO",1)
                         cambia_microfono()
+                    else:
+                        speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
                 
         elif op == 'para':
             sd.stop()
