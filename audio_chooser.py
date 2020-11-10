@@ -1,9 +1,12 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import glob
 import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
 import os
 import pyttsx3
+
 
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
@@ -14,7 +17,7 @@ def async_playback(filename):
     return data, fs
 
 def cambia_microfono():
-    sd.stop()
+    sd.stop()###################################################################################
     while True:
         counter = -1
         print("\n****************************MICROFONOS DISPONIBLES****************************")
@@ -22,12 +25,13 @@ def cambia_microfono():
             print(i)
             counter += 1
         print("******************************************************************************\n")
+        default_devices = sd.default.device#######
+        print("INDICE MICRÓFONO ACTUAL: ",default_devices[0])
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
         try:
             opcion = int(validate_num(listening()))
             if opcion >= 0 and opcion <= counter:
-                default_devices = sd.default.device#######
-                default_input = default_devices[0]##########
+                #default_input = default_devices[0]##########
                 sd.default.device=opcion
                 print("\nINDICE MICRÓFONO: ",default_devices[0])
                 speaker("nuevo microfono establecido correctamente",0)
@@ -106,6 +110,7 @@ def correct_dir():
         except:
             pass
     
+
 def speaker(content,v):
     engine.say(content)
     if v == 1:
