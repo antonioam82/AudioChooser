@@ -10,6 +10,7 @@ import pyttsx3
 
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     data, fs = sf.read(filename)
@@ -31,6 +32,7 @@ def cambia_microfono():
         try:
             opcion = int(validate_num(listening()))
             if opcion >= 0 and opcion <= counter:
+                
                 #default_input = default_devices[0]##########
                 sd.default.device=opcion
                 print("\nINDICE MICRÓFONO: ",default_devices[0])
@@ -87,6 +89,8 @@ def select_audio():
                 except Exception as e:
                     print(str(e))
                     speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
+                    if 'Error opening OutputStream:' in str(e):
+                        cambia_microfono()
                 
         elif op == 'para':
             sd.stop()
