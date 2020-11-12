@@ -6,6 +6,8 @@ import os
 import pyttsx3
 import pickle
 
+lista_temas = []
+direc = pickle.load(open('directorios','rb'))
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
@@ -125,15 +127,24 @@ def comandos():
     print("'fin'------------------------------FINALIZA EL PROGRAMA")
     print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
     print("'comandos'----------------------MUESTRA COMANDOS DE VOZ")
-    print("********************************************************\n") 
+    print("********************************************************\n")
+
+def collect(mo):
+    for i in glob.glob("*.wav"):
+        lista_temas.append(i)
+    if len(lista_temas) == 0:
+        print("CARPETA VACÍA\n")
+        speaker("la carpeta seleccionada no contiene archivos válidos",0)
+    else:
+        if mo == "new":
+            pickle.dump(direc,open("directorios","wb"))
+
+
     
 #sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
 engine = pyttsx3.init()
 engine.setProperty('rate',160)
-lista_temas = []
-direc = pickle.load(open('directorios','rb'))
-#print(direc[0])
 
 while len(lista_temas) == 0:
     comandos()
@@ -152,24 +163,16 @@ while len(lista_temas) == 0:
         new_dir = input("INTRODUZCA NUEVO DIRECTORIO: ")
         if os.path.isdir(new_dir):
             direc.append(new_dir)
-            pickle.dump(direc,open("directorios","wb"))
-        print("Nueva situacion: ",direc)
+            os.chdir(new_dir)
+            collect("new")
     else:
-        numero = int(validate_num(opcionn))
-        assert numero in range(len(direc))
-        new_dir = direc[numero]
-        
-    os.chdir(new_dir)
-    print("ND: ",os.getcwd())
-
-
+        numero = validate_num(opcionn)
+        if str(numero).isdigit():
+            new_dir = direc[int(numero)]
+            os.chdir(new_dir)
+            collect("num")
+    
     print("\nCARPETA: ",os.getcwd())
 
-    for i in glob.glob("*.wav"):
-        lista_temas.append(i)
-
-    if len(lista_temas) == 0:
-        print("CARPETA VACÍA\n")
-        speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
 select_audio()
