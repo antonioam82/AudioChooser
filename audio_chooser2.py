@@ -9,6 +9,7 @@ import pickle
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -103,16 +104,7 @@ def select_audio():
             break
         elif op == 'cambia micrófono':
             cambia_microfono()
-        
-'''def correct_dir(d):
-    while True:
-        try:
-            os.chdir(d)
-            break
-    except:
-        pass'''
     
-
 def speaker(content,v):
     engine.say(content)
     if v == 1:
@@ -126,6 +118,14 @@ def validate_num(value):
     else:
         return value
 
+def comandos():
+    print("\n********************COMANDOS DE VOZ********************")
+    print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
+    print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
+    print("'fin'------------------------------FINALIZA EL PROGRAMA")
+    print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
+    print("'comandos'----------------------MUESTRA COMANDOS DE VOZ")
+    print("********************************************************\n") 
     
 #sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
@@ -136,18 +136,15 @@ direc = pickle.load(open('directorios','rb'))
 #print(direc[0])
 
 while len(lista_temas) == 0:
-    print("\n********************COMANDOS DE VOZ********************")
-    print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
-    print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
-    print("'fin'------------------------------FINALIZA EL PROGRAMA")
-    print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
-    print("********************************************************\n")
+    comandos()
 
-    print("\n---------------------------------------------------------------------------------\n")
 
+    print("\n******************COLECCIONES******************")
     for elem,di in enumerate(direc):
         print(elem,di)
+    print("***********************************************\n")
 
+    
     opcionn = listening()
     print(opcionn)
 
