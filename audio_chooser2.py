@@ -11,6 +11,7 @@ direc = pickle.load(open('directorios','rb'))
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -155,11 +156,12 @@ while len(lista_temas) == 0:
         print(elem,di)
     print("***********************************************\n")
 
-    
+    speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO O DIGA NUEVO PARA AÑADIR UNO NUEVO",1)
     opcionn = listening()
     print(opcionn)
 
     if opcionn == 'nuevo':
+        speaker("introduzca nuevo directorio",0)
         new_dir = input("INTRODUZCA NUEVO DIRECTORIO: ")
         if os.path.isdir(new_dir):
             direc.append(new_dir)
@@ -169,11 +171,14 @@ while len(lista_temas) == 0:
     else:
         numero = validate_num(opcionn)
         if str(numero).isdigit() and len(direc)>0:
-            new_dir = direc[int(numero)]
-            os.chdir(new_dir)
-            collect()
+            try:
+                new_dir = direc[int(numero)]
+                os.chdir(new_dir)
+                collect()
+            except Exception as e:
+                print(str(e))
+                speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
     
     print("\nCARPETA: ",os.getcwd())
-
 
 select_audio()
