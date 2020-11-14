@@ -136,6 +136,10 @@ def collect():
         print("CARPETA VACÍA\n")
         speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
+            
+
+
+    
 #sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
 engine = pyttsx3.init()
@@ -145,10 +149,10 @@ while len(lista_temas) == 0:
     comandos()
 
 
-    print("\n******************COLECCIONES******************")
+    print("\n****************************COLECCIONES****************************")
     for elem,di in enumerate(direc):
         print(elem,di)
-    print("***********************************************\n")
+    print("*******************************************************************\n")
 
     speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO O DIGA NUEVO PARA AÑADIR UNO NUEVO",1)
     opcionn = listening()
@@ -174,5 +178,6 @@ while len(lista_temas) == 0:
                 speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
     
     print("\nCARPETA: ",os.getcwd())
+
 
 select_audio()
