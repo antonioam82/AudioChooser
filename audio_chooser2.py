@@ -11,6 +11,7 @@ direc = pickle.load(open('directorios','rb'))
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -27,6 +28,7 @@ def cambia_microfono():
             print(i)
         print("******************************************************************************\n")
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
+        #print("DIGA EN ALTO EL NÚMERO.")
         try:
             reco = listening()
             if reco in nums:
@@ -106,6 +108,8 @@ def select_audio():
             cambia_microfono()
         elif op == 'comandos':
             comandos()
+        elif op == 'colecciones':
+            change_dir()
     
 def speaker(content,v):
     engine.say(content)
@@ -120,6 +124,26 @@ def validate_num(value):
     else:
         return value
 
+def change_dir():
+    global lista_temas
+    while True:
+        print("\n****************************COLECCIONES****************************")
+        for elem,di in enumerate(direc):
+            print(elem,di)
+        print("*******************************************************************\n")
+
+        speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO.",1)
+        numero = validate_num(listening())
+        try:
+            os.chdir(direc[int(numero)])
+            lista_temas = []
+            collect()
+            speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
+            print("\nCARPETA: ",os.getcwd())
+            break
+        except:
+            speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
+        
 def comandos():
     print("\n********************COMANDOS DE VOZ********************")
     print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
@@ -127,6 +151,7 @@ def comandos():
     print("'fin'------------------------------FINALIZA EL PROGRAMA")
     print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
     print("'comandos'----------------------MUESTRA COMANDOS DE VOZ")
+    print("'colecciones'-----------------CAMBIAR CARPETA DE AUDIOS")
     print("********************************************************\n")
 
 def collect():
@@ -137,9 +162,6 @@ def collect():
         speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
             
-
-
-    
 #sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
 engine = pyttsx3.init()
