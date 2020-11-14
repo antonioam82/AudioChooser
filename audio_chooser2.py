@@ -124,6 +124,7 @@ def validate_num(value):
 
 def change_dir():
     global lista_temas
+    sd.stop()
     while True:
         print("\n****************************COLECCIONES****************************")
         for elem,di in enumerate(direc):
@@ -200,5 +201,6 @@ while len(lista_temas) == 0:
                 speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
     
     print("\nCARPETA: ",os.getcwd())
+
 
 select_audio()
