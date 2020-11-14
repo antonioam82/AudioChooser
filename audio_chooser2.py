@@ -166,6 +166,7 @@ while len(lista_temas) == 0:
             pickle.dump(direc,open("directorios","wb"))
             os.chdir(new_dir)
             collect()
+            speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
     else:
         numero = validate_num(opcionn)
         if str(numero).isdigit() and len(direc)>0:
@@ -173,6 +174,7 @@ while len(lista_temas) == 0:
                 new_dir = direc[int(numero)]
                 os.chdir(new_dir)
                 collect()
+                speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
             except Exception as e:
                 print(str(e))
                 speaker("NO SE PUDO PROCESAR LA SOLICITUD",1)
