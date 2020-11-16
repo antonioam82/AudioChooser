@@ -75,25 +75,29 @@ def select_audio():
                 print("*******************************************************\n")
                 texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO."
                 speaker(texto,1)
-            
+                
                 numero = listening()
-                if numero in nums:
-                    eleccion = nums[numero]
-                else:
-                    eleccion = numero
+                
+                if numero != "salir":
+                    if numero in nums:
+                        eleccion = nums[numero]
+                    else:
+                        eleccion = numero
             
-                print(type(eleccion))
-                try:
-                    tema = int(eleccion)
-                    assert tema in range(len(lista_temas))
-                    audio_selec = lista_temas[tema]
-                    print("AUDIO SELECCIONADO: {}".format(audio_selec))
-                    async_playback(audio_selec)
+                    print(type(eleccion))
+                    try:
+                        tema = int(eleccion)
+                        assert tema in range(len(lista_temas))
+                        audio_selec = lista_temas[tema]
+                        print("AUDIO SELECCIONADO: {}".format(audio_selec))
+                        async_playback(audio_selec)
+                        break
+                    except Exception as e:
+                        print(str(e))
+                        list_inn = False
+                        speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
+                else:
                     break
-                except Exception as e:
-                    print(str(e))
-                    list_inn = False
-                    speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
                 
         elif op == 'para':
             list_inn = False
