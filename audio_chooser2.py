@@ -11,7 +11,6 @@ direc = pickle.load(open('directorios','rb'))
 list_inn = False
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
-#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     global list_inn
@@ -28,7 +27,6 @@ def cambia_microfono():
             print(i)
         print("******************************************************************************\n")
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
-        #print("DIGA EN ALTO EL NÚMERO.")
         try:
             reco = listening()
             if reco in nums:
@@ -47,26 +45,22 @@ def listening():
     with sr.Microphone() as source:
         print("Say something:")
         r.adjust_for_ambient_noise(source)
-        r.energy_threshold=400#10050
+        r.energy_threshold=300#10050
 
         audio = r.listen(source)
         try:
             text = r.recognize_google(audio,language='es-ES')
             print("TEXTO: ",text)
-            if list_inn == True:
-                if text in nums or text.isdigit():
-                    return text
-            else:
-                return text
+            return text
         except:
             print("Sin entrada")
             pass
             
 def select_audio():
     while True:
-        global list_inn
-        op = listening()
-        if op == "lista":
+        global list_inn, opcionn
+        opcionn = listening()
+        if opcionn == "lista":
             list_inn = True
             while True:
                 print("\n********************LISTA DE AUDIOS********************")
@@ -76,13 +70,13 @@ def select_audio():
                 texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO."
                 speaker(texto,1)
                 
-                numero = listening()
+                opcionn = listening()
                 
-                if numero != "salir":
-                    if numero in nums:
-                        eleccion = nums[numero]
+                if opcionn != "salir" and opcionn != "fin":
+                    if opcionn in nums:
+                        eleccion = nums[opcionn]
                     else:
-                        eleccion = numero
+                        eleccion = opcionn
             
                     print(type(eleccion))
                     try:
@@ -99,20 +93,20 @@ def select_audio():
                 else:
                     break
                 
-        elif op == 'para':
+        if opcionn == 'para':
             list_inn = False
             sd.stop()
             print('STOPPED')
             speaker("audio interrumpido",0)
-        elif op == 'fin':
+        if opcionn == 'fin':
             sd.stop()
             speaker("programa finalizado, hasta pronto",0)
             break
-        elif op == 'cambia micrófono':
+        if opcionn == 'cambia micrófono':
             cambia_microfono()
-        elif op == 'comandos':
+        if opcionn == 'comandos':
             comandos()
-        elif op == 'colecciones':
+        if opcionn == 'colecciones':
             change_dir()
     
 def speaker(content,v):
@@ -138,9 +132,9 @@ def change_dir():
         print("*******************************************************************\n")
 
         speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO.",1)
-        numero = validate_num(listening())
+        opcionn = validate_num(listening())
         try:
-            os.chdir(direc[int(numero)])
+            os.chdir(direc[int(opcionn)])
             lista_temas = []
             collect()
             speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
