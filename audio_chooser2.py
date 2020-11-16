@@ -12,10 +12,8 @@ nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
 
 def async_playback(filename):
-    global list_inn
     data, fs = sf.read(filename)
     sd.play(data,fs)
-    list_inn = False
     return data, fs
 
 def cambia_microfono():
@@ -57,10 +55,9 @@ def listening():
             
 def select_audio():
     while True:
-        global list_inn, opcionn
+        global opcionn
         opcionn = listening()
         if opcionn == "lista":
-            list_inn = True
             while True:
                 print("\n********************LISTA DE AUDIOS********************")
                 for elem,tema in enumerate(lista_temas):
