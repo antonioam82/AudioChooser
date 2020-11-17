@@ -10,6 +10,7 @@ lista_temas = []
 direc = pickle.load(open('directorios','rb'))
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     data, fs = sf.read(filename)
@@ -25,18 +26,23 @@ def cambia_microfono():
         print("******************************************************************************\n")
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
         #print("DIGA EN ALTO EL NÚMERO.")
-        try:
-            reco = listening()
-            if reco in nums:
-                opcion = nums[reco]
-            else:
-                opcion = int(reco)
-            sd.default.device=opcion
-            print("\nINDICE MICRÓFONO: ",opcion)
-            speaker("nuevo microfono establecido correctamente",0)
+        opcionn = listening()
+        if opcionn == 'salir':
+            speaker("PROCESO DE SELECCIÓN CANCELADO.",1)
             break
-        except Exception as e:
-            print(str(e))
+        else:
+            try:
+                if opcionn in nums:
+                    opcion = nums[opcionn]
+                else:
+                    opcion = int(opcionn)
+                sd.default.device=opcion
+                print("\nINDICE MICRÓFONO: ",opcion)
+                speaker("nuevo microfono establecido correctamente",0)
+                break
+            except Exception as e:
+                print(str(e))
+                
 
 def listening():
     r = sr.Recognizer()
@@ -87,6 +93,8 @@ def select_audio():
                         list_inn = False
                         speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
                 else:
+                    if opcionn == "salir":
+                        speaker("PROCESO DE SELECCIÓN CANCELADO.",1)
                     break
                 
         if opcionn == 'para':
