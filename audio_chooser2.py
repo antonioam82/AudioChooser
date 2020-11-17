@@ -182,10 +182,7 @@ while len(lista_temas) == 0:
     speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO O DIGA NUEVO PARA AÑADIR UNO NUEVO.",1)
     opcionn = listening()
     print(opcionn)
-
-    if opcionn == "fin":
-        break
-
+    
     if opcionn == 'nuevo':
         speaker("introduzca nuevo directorio",0)
         new_dir = input("INTRODUZCA NUEVO DIRECTORIO: ")
