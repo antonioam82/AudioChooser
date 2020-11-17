@@ -24,6 +24,7 @@ def cambia_microfono():
             print(i)
         print("******************************************************************************\n")
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
+        #print("DIGA EN ALTO EL NÚMERO.")
         try:
             reco = listening()
             if reco in nums:
@@ -55,7 +56,6 @@ def listening():
             
 def select_audio():
     while True:
-        global opcionn
         opcionn = listening()
         if opcionn == "lista":
             while True:
@@ -175,6 +175,9 @@ while len(lista_temas) == 0:
     opcionn = listening()
     print(opcionn)
 
+    if opcionn == "fin":
+        break
+
     if opcionn == 'nuevo':
         speaker("introduzca nuevo directorio",0)
         new_dir = input("INTRODUZCA NUEVO DIRECTORIO: ")
@@ -200,6 +203,7 @@ while len(lista_temas) == 0:
 
 
 select_audio()
+
 
 
 
