@@ -24,7 +24,6 @@ def cambia_microfono():
             print(i)
         print("******************************************************************************\n")
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
-        #print("DIGA EN ALTO EL NÚMERO.")
         opcionn = listening()
         if opcionn == 'salir':
             speaker("PROCESO DE SELECCIÓN CANCELADO.",1)
@@ -74,23 +73,26 @@ def select_audio():
                 opcionn = listening()
                 
                 if opcionn != "salir" and opcionn != "fin":
-                    if opcionn in nums:
-                        eleccion = nums[opcionn]
+                    if opcionn == "comandos":
+                        comandos()
                     else:
-                        eleccion = opcionn
+                        if opcionn in nums:
+                            eleccion = nums[opcionn]
+                        else:
+                            eleccion = opcionn
             
-                    print(type(eleccion))
-                    try:
-                        tema = int(eleccion)
-                        assert tema in range(len(lista_temas))
-                        audio_selec = lista_temas[tema]
-                        print("AUDIO SELECCIONADO: {}".format(audio_selec))
-                        async_playback(audio_selec)
-                        break
-                    except Exception as e:
-                        print(str(e))
-                        list_inn = False
-                        speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
+                        print(type(eleccion))
+                        try:
+                            tema = int(eleccion)
+                            assert tema in range(len(lista_temas))
+                            audio_selec = lista_temas[tema]
+                            print("AUDIO SELECCIONADO: {}".format(audio_selec))
+                            async_playback(audio_selec)
+                            break
+                        except Exception as e:
+                            print(str(e))
+                            list_inn = False
+                            speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
                 else:
                     if opcionn == "salir":
                         speaker("PROCESO DE SELECCIÓN CANCELADO.",1)
@@ -154,6 +156,7 @@ def comandos():
     print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
     print("'comandos'----------------------MUESTRA COMANDOS DE VOZ")
     print("'colecciones'-----------------CAMBIAR CARPETA DE AUDIOS")
+    print("'salir'-------------------CANCELAR PROCESO DE SELECCIÓN")
     print("********************************************************\n")
 
 def collect():
@@ -178,20 +181,23 @@ while True:
         print(elem,di)
     print("*******************************************************************\n")
 
-    speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO O \nDIGA NUEVO PARA AÑADIR UNO NUEVO.",1)
+    speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO\nO DIGA NUEVO PARA AÑADIR UNO NUEVO.",1)
     opcionn = listening()
     print(opcionn)
     
     if opcionn == 'nuevo':
         speaker("introduzca nuevo directorio",0)
         new_dir = input("INTRODUZCA NUEVO DIRECTORIO: ")
-        if os.path.isdir(new_dir):
-            direc.append(new_dir)
-            pickle.dump(direc,open("directorios","wb"))
-            os.chdir(new_dir)
-            collect()
-            speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
-            break
+        if not new_dir in direc:
+            if os.path.isdir(new_dir):
+                direc.append(new_dir)
+                pickle.dump(direc,open("directorios","wb"))
+                os.chdir(new_dir)
+                collect()
+                speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
+                break
+        else:
+            speaker("EL DIRECTORIO YA SE ENCUENTRA GUARDADO.",1)
     else:
         numero = validate_num(opcionn)
         if str(numero).isdigit() and len(direc)>0:
