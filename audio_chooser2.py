@@ -10,6 +10,7 @@ lista_temas = []
 direc = pickle.load(open('directorios','rb'))
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     data, fs = sf.read(filename)
@@ -24,6 +25,7 @@ def cambia_microfono():
             print(i)
         print("******************************************************************************\n")
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
+        #print("DIGA EN ALTO EL NÚMERO.")
         opcionn = listening()
         if opcionn == 'salir':
             speaker("PROCESO DE SELECCIÓN CANCELADO.",1)
@@ -40,7 +42,6 @@ def cambia_microfono():
                 break
             except Exception as e:
                 print(str(e))
-                speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
                 
 
 def listening():
@@ -169,7 +170,7 @@ def collect():
 engine = pyttsx3.init()
 engine.setProperty('rate',160)
 
-while len(lista_temas) == 0:
+while True:
     comandos()
 
 
@@ -178,7 +179,7 @@ while len(lista_temas) == 0:
         print(elem,di)
     print("*******************************************************************\n")
 
-    speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO O DIGA NUEVO PARA AÑADIR UNO NUEVO.",1)
+    speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO O \nDIGA NUEVO PARA AÑADIR UNO NUEVO.",1)
     opcionn = listening()
     print(opcionn)
     
@@ -191,6 +192,7 @@ while len(lista_temas) == 0:
             os.chdir(new_dir)
             collect()
             speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
+            break
     else:
         numero = validate_num(opcionn)
         if str(numero).isdigit() and len(direc)>0:
@@ -199,6 +201,7 @@ while len(lista_temas) == 0:
                 os.chdir(new_dir)
                 collect()
                 speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
+                break
             except Exception as e:
                 print(str(e))
                 speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
