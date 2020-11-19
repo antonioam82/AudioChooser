@@ -10,6 +10,7 @@ lista_temas = []
 direc = pickle.load(open('directorios','rb'))
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
         'diez':10,'once':11,'doce':12,'trece':13,'catorce':14,'quince':15}
+#C:\Users\Antonio\Documents\videos\audios
 
 def async_playback(filename):
     data, fs = sf.read(filename)
@@ -24,6 +25,7 @@ def cambia_microfono():
             print(i)
         print("******************************************************************************\n")
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
+        #print("DIGA EN ALTO EL NÚMERO.")
         opcionn = listening()
         if opcionn == 'salir':
             speaker("PROCESO DE SELECCIÓN CANCELADO.",1)
@@ -195,6 +197,7 @@ while True:
                 os.chdir(new_dir)
                 collect()
                 speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
+                print("\nCARPETA: ",os.getcwd())
                 break
         else:
             speaker("EL DIRECTORIO YA SE ENCUENTRA GUARDADO.",1)
@@ -222,12 +225,13 @@ while True:
                 os.chdir(new_dir)
                 collect()
                 speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
+                print("\nCARPETA: ",os.getcwd())
                 break
             except Exception as e:
                 print(str(e))
                 speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
     
-    print("\nCARPETA: ",os.getcwd())
+    #print("\nCARPETA: ",os.getcwd())
 
 select_audio()
 
