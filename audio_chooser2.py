@@ -173,6 +173,22 @@ def collect():
         print("CARPETA VACÍA\n")
         speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
+def enter_dir(changed):
+    new_dir = input("INTRODUZCA DIRECTORIO: ")
+    if not new_dir in direc:
+        if os.path.isdir(new_dir):
+            direc.append(new_dir)
+            pickle.dump(direc,open("directorios","wb"))
+            os.chdir(new_dir)
+            collect()
+            speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
+            print("\nCARPETA: ",os.getcwd())
+            changed=True
+    else:
+        speaker("EL DIRECTORIO YA SE ENCUENTRA GUARDADO.",1)
+    return changed
+    
+
             
 #sd.default.device=9 #CAMBIAR DISPOSITIVO DE "ENTRADA/SALIDA"
 
@@ -182,61 +198,55 @@ engine.setProperty('rate',160)
 while True:
     comandos()
 
-
     print("\n****************************COLECCIONES****************************")
     for elem,di in enumerate(direc):
         print(elem,di)
     print("*******************************************************************\n")
 
-    speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO\nO DIGA NUEVO PARA AÑADIR UNO NUEVO.",1)
-    opcionn = listening()
-    print(opcionn)
+    if len(direc)>0:
+        speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO\nO DIGA NUEVO PARA AÑADIR UNO NUEVO.",1)
+        opcionn = listening()
+        print(opcionn)
     
-    if opcionn == 'nuevo':
-        speaker("introduzca nuevo directorio",0)
-        new_dir = input("INTRODUZCA NUEVO DIRECTORIO: ")
-        if not new_dir in direc:
-            if os.path.isdir(new_dir):
-                direc.append(new_dir)
-                pickle.dump(direc,open("directorios","wb"))
-                os.chdir(new_dir)
-                collect()
-                speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
-                print("\nCARPETA: ",os.getcwd())
+        if opcionn == 'nuevo':
+            speaker("introduzca nuevo directorio",0)
+            chang = enter_dir(changed=False)
+            if chang == True:
                 break
-        else:
-            speaker("EL DIRECTORIO YA SE ENCUENTRA GUARDADO.",1)
-            
-    elif opcionn == 'eliminar':
-        speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE A LA COLECCIÓN A ELIMINAR.",1)
-        print("diga numero: ")
-        num = listening()
-        numero = validate_num(num)
-        if str(numero).isdigit():
-            try:
-                direc.remove(direc[int(numero)])
-                print(direc)
-                pickle.dump(direc,open("directorios","wb"))
-                speaker("COLECCIÓN ELIMINADA SATISFACTORIAMENTE.",1)
-            except Exception as e:
-                print(str(e))
-                speaker("no se pudo realizar la acción",0)
+        
+        elif opcionn == 'eliminar':
+            speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE A LA COLECCIÓN A ELIMINAR.",1)
+            print("diga numero: ")
+            num = listening()
+            numero = validate_num(num)
+            if str(numero).isdigit():
+                try:
+                    direc.remove(direc[int(numero)])
+                    print(direc)
+                    pickle.dump(direc,open("directorios","wb"))
+                    speaker("COLECCIÓN ELIMINADA SATISFACTORIAMENTE.",1)
+                except Exception as e:
+                    print(str(e))
+                    speaker("no se pudo realizar la acción",0)
                 
+        else:
+            numero = validate_num(opcionn)
+            if str(numero).isdigit() and len(direc)>0:
+                try:
+                    new_dir = direc[int(numero)]
+                    os.chdir(new_dir)
+                    collect()
+                    speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
+                    print("\nCARPETA: ",os.getcwd())
+                    break
+                except Exception as e:
+                    print(str(e))
+                    speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
     else:
-        numero = validate_num(opcionn)
-        if str(numero).isdigit() and len(direc)>0:
-            try:
-                new_dir = direc[int(numero)]
-                os.chdir(new_dir)
-                collect()
-                speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
-                print("\nCARPETA: ",os.getcwd())
-                break
-            except Exception as e:
-                print(str(e))
-                speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
-    
-    #print("\nCARPETA: ",os.getcwd())
+        speaker("INTRODUZCA RUTA A LA COLECCIÓN.",1)
+        chang = enter_dir(changed=False)
+        if chang == True:
+            break
 
 select_audio()
 
