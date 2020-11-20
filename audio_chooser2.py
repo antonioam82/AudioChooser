@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import glob
 import speech_recognition as sr
 import sounddevice as sd
