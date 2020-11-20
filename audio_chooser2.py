@@ -204,7 +204,8 @@ while True:
     print("*******************************************************************\n")
 
     if len(direc)>0:
-        speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO\nO DIGA NUEVO PARA AÑADIR UNO NUEVO.",1)
+        speaker('''DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO,
+'NUEVO' PARA AÑADIR UNO NUEVO O 'BORRAR' PARA ELIMINARLO''',1)
         opcionn = listening()
         print(opcionn)
     
