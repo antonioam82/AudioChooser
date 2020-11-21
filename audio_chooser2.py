@@ -207,7 +207,6 @@ while True:
         speaker('''DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO,
 'NUEVO' PARA AÑADIR UNO NUEVO O 'BORRAR' PARA ELIMINARLO''',1)
         opcionn = listening()
-        print(opcionn)
     
         if opcionn == 'nuevo':
             speaker("introduzca nuevo directorio",0)
@@ -248,6 +247,7 @@ while True:
         chang = enter_dir(changed=False)
         if chang == True:
             break
+
 
 select_audio()
 
