@@ -247,7 +247,6 @@ while True:
         if chang == True:
             break
 
-
 select_audio()
 
 
