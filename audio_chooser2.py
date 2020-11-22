@@ -205,7 +205,7 @@ while True:
 
     if len(direc)>0:
         speaker('''DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO,
-'NUEVO' PARA AÑADIR UNO NUEVO O 'BORRAR' PARA ELIMINARLO''',1)
+'NUEVO' PARA AÑADIR UNO NUEVO O 'ELIMINAR' PARA ELIMINARLO''',1)
         opcionn = listening()
     
         if opcionn == 'nuevo':
