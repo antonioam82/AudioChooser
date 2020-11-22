@@ -184,6 +184,8 @@ def enter_dir(changed):
             speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
             print("\nCARPETA: ",os.getcwd())
             changed=True
+        else:
+            speaker("EL DIRECTORIO NO EXISTE.",1)
     else:
         speaker("EL DIRECTORIO YA SE ENCUENTRA GUARDADO.",1)
     return changed
@@ -227,6 +229,8 @@ while True:
                 except Exception as e:
                     print(str(e))
                     speaker("no se pudo realizar la acción",0)
+            else:
+                speaker("COMANDO NO VÁLIDO.",1)
                 
         else:
             numero = validate_num(opcionn)
@@ -246,6 +250,7 @@ while True:
         chang = enter_dir(changed=False)
         if chang == True:
             break
+
 
 select_audio()
 
