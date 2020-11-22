@@ -198,7 +198,7 @@ engine = pyttsx3.init()
 engine.setProperty('rate',160)
 
 while True:
-    comandos()
+    #comandos()
 
     print("\n****************************COLECCIONES****************************")
     for elem,di in enumerate(direc):
@@ -207,7 +207,7 @@ while True:
 
     if len(direc)>0:
         speaker('''DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO,
-'NUEVO' PARA AÑADIR UNO NUEVO O 'ELIMINAR' PARA ELIMINARLO''',1)
+'NUEVO' PARA AÑADIR UNO NUEVO O 'ELIMINAR' PARA BORRARLO''',1)
         opcionn = listening()
     
         if opcionn == 'nuevo':
@@ -230,7 +230,7 @@ while True:
                     print(str(e))
                     speaker("no se pudo realizar la acción",0)
             else:
-                speaker("COMANDO NO VÁLIDO.",1)
+                speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
                 
         else:
             numero = validate_num(opcionn)
@@ -251,6 +251,7 @@ while True:
         if chang == True:
             break
 
+comandos()
 select_audio()
 
 
