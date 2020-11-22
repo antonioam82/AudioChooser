@@ -216,7 +216,6 @@ while True:
         
         elif opcionn == 'eliminar':
             speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE A LA COLECCIÓN A ELIMINAR.",1)
-            print("diga numero: ")
             num = listening()
             numero = validate_num(num)
             if str(numero).isdigit():
@@ -247,6 +246,7 @@ while True:
         chang = enter_dir(changed=False)
         if chang == True:
             break
+
 
 select_audio()
 
