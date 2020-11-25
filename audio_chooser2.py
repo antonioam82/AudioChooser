@@ -8,6 +8,11 @@ import os
 import pyttsx3
 import pickle
 
+if not 'directorios' in os.listdir():
+    fichero = open('directorios','wb')
+    pickle.dump([],fichero)
+    fichero.close()
+
 lista_temas = []
 direc = pickle.load(open('directorios','rb'))
 nums = {'cero':0,'uno':1,'dos':2,'tres':3,'cuatro':4,'cinco':5,'seis':6,'siete':7,'ocho':8,'nueve':9,
@@ -74,7 +79,7 @@ def select_audio():
                 
                 opcionn = listening()
                 
-                if opcionn != "salir" and opcionn != "fin":
+                if opcionn != "salir" and opcionn != "finalizar":
                     if opcionn == "comandos":
                         comandos()
                     else:
@@ -105,7 +110,7 @@ def select_audio():
             sd.stop()
             print('STOPPED')
             speaker("audio interrumpido",0)
-        if opcionn == 'fin':
+        if opcionn == 'finalizar':
             sd.stop()
             speaker("programa finalizado, hasta pronto",0)
             break
@@ -159,7 +164,7 @@ def comandos():
     print("\n********************COMANDOS DE VOZ********************")
     print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
     print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
-    print("'fin'------------------------------FINALIZA EL PROGRAMA")
+    print("'finalizar'------------------------FINALIZA EL PROGRAMA")
     print("'cambia micrófono'--------------------CAMBIAR MICROFONO")
     print("'comandos'----------------------MUESTRA COMANDOS DE VOZ")
     print("'colecciones'-----------------CAMBIAR CARPETA DE AUDIOS")
