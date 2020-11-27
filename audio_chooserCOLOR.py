@@ -31,6 +31,7 @@ def cambia_microfono():
     sd.stop()###################################################################################
     while True:
         print(Fore.GREEN+"\n****************************MICROFONOS DISPONIBLES****************************")
+        num_micros = len(sr.Microphone.list_microphone_names())
         for i in enumerate(sr.Microphone.list_microphone_names()):
             print(i)
         print("******************************************************************************\n")
@@ -45,10 +46,13 @@ def cambia_microfono():
                     opcion = nums[opcionn]
                 else:
                     opcion = int(opcionn)
-                sd.default.device=opcion
-                print("\nINDICE MICRÓFONO: ",opcion)
-                speaker("nuevo microfono establecido correctamente",0)
-                break
+                if opcion >= 0 and opcion <= num_micros-1:
+                    sd.default.device=opcion
+                    print("\nINDICE MICRÓFONO: ",opcion)
+                    speaker("nuevo microfono establecido correctamente",0)
+                    break
+                else:
+                    speaker("INDICE FUERA DE RANGO",1)
             except Exception as e:
                 print(Fore.RED+str(e))
                 
@@ -56,14 +60,14 @@ def cambia_microfono():
 def listening():
     r = sr.Recognizer()
     with sr.Microphone() as source:
-        print("Say something:")
+        print(Fore.WHITE+"Say something:")
         r.adjust_for_ambient_noise(source)
         r.energy_threshold=300#10050
 
         audio = r.listen(source)
         try:
             text = r.recognize_google(audio,language='es-ES')
-            print("TEXTO: ",text)
+            print(Fore.WHITE+"TEXTO: ",text)
             return text
         except:
             print("Sin entrada")
@@ -74,7 +78,7 @@ def select_audio():
         opcionn = listening()
         if opcionn == "lista":
             while True:
-                print("\n********************LISTA DE AUDIOS********************")
+                print(Fore.GREEN+"\n********************LISTA DE AUDIOS********************")
                 for elem,tema in enumerate(lista_temas):
                     print(elem,tema)
                 print("*******************************************************\n")
@@ -97,7 +101,7 @@ def select_audio():
                             tema = int(eleccion)
                             assert tema in range(len(lista_temas))
                             audio_selec = lista_temas[tema]
-                            print("AUDIO SELECCIONADO: {}".format(audio_selec))
+                            print(Fore.WHITE+"AUDIO SELECCIONADO: {}".format(audio_selec))
                             async_playback(audio_selec)
                             break
                         except Exception as e:
@@ -112,7 +116,7 @@ def select_audio():
         if opcionn == 'para':
             list_inn = False
             sd.stop()
-            print('STOPPED')
+            print(Fore.WHITE+'STOPPED')
             speaker("audio interrumpido",0)
         if opcionn == 'finalizar':
             sd.stop()
