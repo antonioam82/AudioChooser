@@ -25,6 +25,7 @@ def async_playback(filename):
 
 def cambia_microfono():
     sd.stop()###################################################################################
+    num_micros = len(sr.Microphone.list_microphone_names())
     while True:
         print("\n****************************MICROFONOS DISPONIBLES****************************")
         for i in enumerate(sr.Microphone.list_microphone_names()):
@@ -41,10 +42,13 @@ def cambia_microfono():
                     opcion = nums[opcionn]
                 else:
                     opcion = int(opcionn)
-                sd.default.device=opcion
-                print("\nINDICE MICRÓFONO: ",opcion)
-                speaker("nuevo microfono establecido correctamente",0)
-                break
+                if opcion >= 0 and opcion <= num_micros-1:
+                    sd.default.device=opcion
+                    print("\nINDICE MICRÓFONO: ",opcion)
+                    speaker("nuevo microfono establecido correctamente",0)
+                    break
+                else:
+                    speaker("INDICE FUERA DE RANGO",1)
             except Exception as e:
                 print(str(e))
                 
