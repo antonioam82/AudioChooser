@@ -211,7 +211,8 @@ while True:
 
     print("\n****************************COLECCIONES****************************")
     for elem,di in enumerate(direc):
-        print(elem,di)
+        if os.path.isdir(di):
+            print(elem,di)
     print("*******************************************************************\n")
 
     if len(direc)>0:
