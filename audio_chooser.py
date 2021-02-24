@@ -213,6 +213,9 @@ while True:
     for elem,di in enumerate(direc):
         if os.path.isdir(di):
             print(elem,di)
+        else:
+            direc.remove(di)
+            pickle.dump(direc,open("directorios","wb"))
     print("*******************************************************************\n")
 
     if len(direc)>0:
@@ -263,6 +266,7 @@ while True:
 
 comandos()
 select_audio()
+
 
 
 
