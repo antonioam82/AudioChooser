@@ -109,6 +109,7 @@ def select_audio():
                 else:
                     if opcionn == "salir":
                         speaker("PROCESO DE SELECCIÓN CANCELADO.",1)
+                        comandos()
                     break
                 
         if opcionn == 'para':
@@ -160,6 +161,7 @@ def change_dir():
                 collect()
                 speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
                 print("\nCARPETA: ",os.getcwd())
+                comandos()
                 break
             except:
                 speaker("NO SE PUDO PROCESAR LA SOLICITUD.",1)
@@ -258,6 +260,7 @@ while True:
                     collect()
                     speaker("DIRECTORIO ESTABLECIDO CORRECTAMENTE.",1)
                     print("\nCARPETA: ",os.getcwd())
+                    comandos()
                     break
                 except Exception as e:
                     print(str(e))
@@ -268,7 +271,7 @@ while True:
         if chang == True:
             break
 
-comandos()
+#comandos()
 select_audio()
 
 
