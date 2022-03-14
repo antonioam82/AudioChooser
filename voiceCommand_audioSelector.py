@@ -5,6 +5,7 @@ import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
 import os
+from colorama import init, Fore, Back, Style
 import pyttsx3
 import pickle
 
@@ -13,6 +14,7 @@ if not 'directorios' in os.listdir():
     pickle.dump([],fichero)
     fichero.close()
 
+init()
 lista_temas = []
 direc = pickle.load(open('directorios','rb'))
 print(direc)
@@ -28,10 +30,10 @@ def cambia_microfono():
     sd.stop()###################################################################################
     num_micros = len(sr.Microphone.list_microphone_names())
     while True:
-        print("\n****************************MICROFONOS DISPONIBLES****************************")
+        print(Fore.YELLOW+"\n****************************MICROFONOS DISPONIBLES****************************")
         for i in enumerate(sr.Microphone.list_microphone_names()):
             print(i)
-        print("******************************************************************************\n")
+        print("******************************************************************************\n"+Fore.RESET)
         speaker("DIGA EN ALTO EL NÚMERO CORRESPONDIENTE AL MICRÓFONO DESEADO.",1)
         opcionn = listening()
         if opcionn == 'salir':
@@ -76,12 +78,11 @@ def select_audio():
         opcionn = listening()
         if opcionn == "lista":
             while True:
-                print("\n********************LISTA DE AUDIOS********************")
+                print(Fore.YELLOW+"\n********************LISTA DE AUDIOS********************")
                 for elem,tema in enumerate(lista_temas):
                     print(elem,tema)
-                print("*******************************************************\n")
-                texto = "DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO."
-                speaker(texto,1)
+                print("*******************************************************\n"+Fore.RESET)
+                speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL AUDIO DESEADO.",1)
                 
                 opcionn = listening()
                 
@@ -115,7 +116,7 @@ def select_audio():
         if opcionn == 'para':
             list_inn = False
             sd.stop()
-            print('STOPPED')
+            print(Fore.RED+'STOPPED'+Fore.RESET)
             speaker("audio interrumpido",0)
             comandos()
         if opcionn == 'finalizar':
@@ -132,7 +133,7 @@ def select_audio():
 def speaker(content,v):
     engine.say(content)
     if v == 1:
-        print(content)
+        print(Fore.RED+content+Fore.RESET)
     engine.runAndWait()
     engine.stop()
 
@@ -146,11 +147,10 @@ def change_dir():
     global lista_temas
     sd.stop()
     while True:
-        print("\n****************************COLECCIONES****************************")
+        print(Fore.YELLOW+"\n****************************COLECCIONES****************************")
         for elem,di in enumerate(direc):
             print(elem,di)
-        print("*******************************************************************\n")
-
+        print("*******************************************************************\n"+Fore.RESET)
         speaker("DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO.",1)
         opcionn = listening()
         if opcionn != 'salir':
@@ -171,7 +171,7 @@ def change_dir():
         comandos()
         
 def comandos():
-    print("\n********************COMANDOS DE VOZ********************")
+    print(Fore.GREEN+"\n********************COMANDOS DE VOZ********************")
     print("'lista'-------------------------MUESTRA LISTA DE AUDIOS")
     print("'para'------------------FINALIZA REPRODUCCIÓN DEL AUDIO")
     print("'finalizar'------------------------FINALIZA EL PROGRAMA")
@@ -179,13 +179,13 @@ def comandos():
     print("'comandos'----------------------MUESTRA COMANDOS DE VOZ")
     print("'colecciones'-----------------CAMBIAR CARPETA DE AUDIOS")
     print("'salir'-------------------CANCELAR PROCESO DE SELECCIÓN")
-    print("********************************************************\n")
+    print("********************************************************\n"+Fore.RESET)
 
 def collect():
     for i in glob.glob("*.wav"):
         lista_temas.append(i)
     if len(lista_temas) == 0:
-        print("CARPETA VACÍA\n")
+        print(Fore.RED+"CARPETA VACÍA\n"+Fore.RESET)
         speaker("la carpeta seleccionada no contiene archivos válidos",0)
 
 def enter_dir(changed):
@@ -215,18 +215,19 @@ engine.setProperty('rate',160)
 while True:
     #comandos()
 
-    print("\n****************************COLECCIONES****************************")
+    print(Fore.YELLOW+"\n****************************COLECCIONES****************************")
     for elem,di in enumerate(direc):
         if os.path.isdir(di):
             print(elem,di)
         else:
             direc.remove(di)
             pickle.dump(direc,open("directorios","wb"))
-    print("*******************************************************************\n")
+    print("*******************************************************************\n"+Fore.RESET)
 
     if len(direc)>0:
-        speaker('''DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO,
-'NUEVO' PARA AÑADIR UNO NUEVO, 'ELIMINAR' PARA BORRARLO o 'FINALIZAR' PARA SALIR DEL PRORAMA.''',1)
+        print(Fore.RED+'''DIGA EN VOZ ALTA EL NÚMERO CORRESPONDIENTE AL DIRECTORIO DESEADO, 'NUEVO' PARA
+AÑADIR UNO NUEVO, 'ELIMINAR' PARA BORRARLO O 'FINALIZAR' PARA SALIR DEL PROGRAMA.'''+Fore.RESET)
+        speaker("SELECCIONE COLECCIÓN",0)
         opcionn = listening()
     
         if opcionn == 'nuevo':
